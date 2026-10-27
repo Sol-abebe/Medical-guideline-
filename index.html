@@ -1,0 +1,1148 @@
+ ```html
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Clinical Decision Support System & Comprehensive Practice Guidelines Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            perspective: 1200px;
+        }
+
+        /* Tactile 3D Glassmorphism Cards */
+        .card-3d {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-3d:hover {
+            transform: translateY(-4px) rotateX(1.5deg) rotateY(-1.5deg);
+            box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.35);
+        }
+
+        /* Button tactile feel */
+        .btn-tactile {
+            transition: all 0.15s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-tactile:active {
+            transform: scale(0.97) translateY(1px);
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.8);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0284c7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0369a1;
+        }
+
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .light body {
+            background-color: #f1f5f9;
+            color: #0f172a;
+        }
+        .light .glass-panel {
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+        }
+        .light .card-3d {
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.05);
+        }
+        .light .card-3d:hover {
+            box-shadow: 0 15px 30px -8px rgba(2, 132, 199, 0.2);
+        }
+        .light .bg-slate-900\/90, .light .bg-slate-900\/80, .light .bg-slate-900, .light .bg-slate-950 {
+            background-color: #f8fafc !important;
+            border-color: #cbd5e1 !important;
+            color: #0f172a !important;
+        }
+        .light .text-slate-300, .light .text-slate-400 {
+            color: #334155 !important;
+        }
+        .light .text-white {
+            color: #0f172a !important;
+        }
+        .light input, .light select {
+            background-color: #ffffff !important;
+            color: #0f172a !important;
+            border-color: #cbd5e1 !important;
+        }
+
+        /* Navigation Active Pill */
+        .nav-tab.active {
+            background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+            color: #ffffff !important;
+            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen transition-colors duration-300">
+
+    <!-- Top Header & Global Controls -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3.5 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Branding -->
+            <div class="flex items-center space-x-3 w-full md:w-auto justify-between md:justify-start">
+                <div class="flex items-center space-x-3">
+                    <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-500 via-indigo-600 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-sky-500/30 transform rotate-1 hover:rotate-0 transition">
+                        <i class="fa-solid fa-notes-medical text-2xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="font-extrabold text-lg tracking-wide text-white flex items-center gap-2">
+                            3D MedAssist CDSS
+                            <span class="text-[10px] bg-sky-500/20 text-sky-400 border border-sky-500/30 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider">Clinical Hub</span>
+                        </h1>
+                        <p class="text-xs text-slate-400">Evidence-Based Clinical Decision Support & Guidelines Platform</p>
+                    </div>
+                </div>
+
+                <!-- Theme Switcher Mobile -->
+                <button id="themeToggleMobile" class="md:hidden p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white transition">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+
+            <!-- Global Search & Controls -->
+            <div class="flex items-center space-x-3 w-full md:w-auto">
+                <div class="relative flex-1 md:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="globalSearch" placeholder="Search guidelines, drugs, protocols..." 
+                           class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-10 pr-4 py-2 text-sm text-slate-200 placeholder-slate-400 focus:outline-none focus:border-sky-500 transition-all shadow-inner">
+                </div>
+                <button id="themeToggle" class="hidden md:flex p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700 transition btn-tactile">
+                    <i class="fa-solid fa-moon" id="themeIcon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 lg:px-8 py-6">
+
+        <!-- Navigation Tabs Container -->
+        <nav class="flex flex-nowrap gap-2 mb-8 p-1.5 bg-slate-900/90 rounded-2xl border border-slate-800 shadow-inner overflow-x-auto scrollbar-none" id="moduleTabs">
+            <button data-tab="tb" class="nav-tab active px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-lungs text-amber-400"></i> TB Guidelines
+            </button>
+            <button data-tab="syphilis" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-shield-virus text-pink-400"></i> Syphilis Protocol
+            </button>
+            <button data-tab="stis" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-virus text-rose-400"></i> Other STDs
+            </button>
+            <button data-tab="mgso4" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-baby text-indigo-400"></i> MgSO4 Protocol
+            </button>
+            <button data-tab="gdm" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-cubes text-emerald-400"></i> GDM Guidelines
+            </button>
+            <button data-tab="hpylori" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-bacteria text-sky-400"></i> H. pylori ACG
+            </button>
+            <button data-tab="iron" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-vial text-red-400"></i> Iron Interpreter
+            </button>
+            <button data-tab="hypertension" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-heart-crack text-amber-400"></i> HTN Emergency
+            </button>
+            <button data-tab="disease-ref" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-book-medical text-teal-400"></i> General Library
+            </button>
+            <button data-tab="calculators" class="nav-tab px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-slate-400 hover:text-slate-200 transition flex items-center gap-2 whitespace-nowrap btn-tactile">
+                <i class="fa-solid fa-calculator text-purple-400"></i> Risk Calculators
+            </button>
+        </nav>
+
+        <!-- MODULE 1: TUBERCULOSIS (TB) TREATMENT GUIDELINES (WHO) -->
+        <section id="module-tb" class="tab-content block space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-amber-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-lungs text-amber-400"></i>
+                        Tuberculosis (TB) Treatment Guidelines (WHO Standard Updates)
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">Drug-Susceptible (DS-TB), Drug-Resistant (DR/MDR-TB), and Tuberculosis Preventive Treatment (TPT).</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1 bg-amber-500/20 text-amber-300 text-xs font-semibold rounded-full border border-amber-500/30">WHO Guidelines</span>
+                </div>
+            </div>
+
+            <!-- TB Guidelines Cards Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 1. Drug-Susceptible TB (DS-TB) -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">1</div>
+                        <h3 class="text-base font-bold text-white">Drug-Susceptible TB (DS-TB)</h3>
+                    </div>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-amber-400 block mb-1">Standard 6-Month Regimen:</strong>
+                            &bull; <strong>2 Months Intensive:</strong> HRZE (Isoniazid, Rifampicin, Pyrazinamide, Ethambutol).<br>
+                            &bull; <strong>4 Months Continuation:</strong> HR (Isoniazid, Rifampicin).
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-emerald-400 block mb-1">WHO Short 4-Month Regimen (Age &ge; 12 yrs):</strong>
+                            &bull; <strong>Regimen:</strong> 2HPZMX / 2HPMX (High-Dose Rifapentine + INH + Pyrazinamide + Moxifloxacin).<br>
+                            &bull; Indicated for eligible non-severe pulmonary DS-TB.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Drug-Resistant TB (DR / MDR / RR-TB) -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center font-bold">2</div>
+                        <h3 class="text-base font-bold text-white">MDR/RR-TB (6-Month All-Oral BPaLM)</h3>
+                    </div>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-rose-400 block mb-1">WHO Preferred BPaLM Regimen (6 Months):</strong>
+                            &bull; <strong>Components:</strong> Bedaquiline + Pretomanid + Linezolid (600mg) + Moxifloxacin.<br>
+                            &bull; <strong>BPaL:</strong> (Without Moxifloxacin) if fluoroquinolone resistance is confirmed.
+                        </div>
+                        <div class="p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl text-rose-300">
+                            <i class="fa-solid fa-triangle-exclamation mr-1"></i>
+                            <strong>Linezolid Toxicity Monitoring:</strong> Monitor weekly CBC for myelosuppression/anemia and inspect for peripheral neuropathy or optic neuritis.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. TPT (TB Preventive Treatment) & Pyridoxine -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <div class="flex items-center space-x-3 border-b border-slate-800 pb-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">3</div>
+                        <h3 class="text-base font-bold text-white">TPT (Latent TB) &amp; Pyridoxine Rules</h3>
+                    </div>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span><strong>3HP:</strong> Weekly Rifapentine + INH</span>
+                            <strong class="text-indigo-300">3 Months</strong>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span><strong>1HP:</strong> Daily Rifapentine + INH</span>
+                            <strong class="text-indigo-300">1 Month</strong>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span><strong>3HR:</strong> Daily INH + Rifampicin</span>
+                            <strong class="text-indigo-300">3 Months</strong>
+                        </div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span><strong>4R:</strong> Daily Rifampicin monotherapy</span>
+                            <strong class="text-indigo-300">4 Months</strong>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border-l-2 border-l-indigo-500 mt-2">
+                            <strong class="text-indigo-300 block mb-0.5">Pyridoxine (Vitamin B6) Co-prescription:</strong>
+                            Co-administer 25–50 mg daily with Isoniazid in pregnant/lactating women, HIV patients, alcohol use disorder, diabetes, or malnutrition to prevent peripheral neuropathy.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 2: SYPHILIS TREATMENT GUIDELINES (CDC & WHO) -->
+        <section id="module-syphilis" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-pink-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-shield-virus text-pink-400"></i>
+                        Syphilis Staging &amp; Treatment Protocol (CDC &amp; WHO)
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">Stage-based antimicrobial regimens, pregnancy rules, desensitization, and reaction management.</p>
+                </div>
+                <span class="px-3 py-1 bg-pink-500/20 text-pink-300 text-xs font-semibold rounded-full border border-pink-500/30">CDC / WHO Protocol</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Primary, Secondary & Early Latent -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h3 class="text-base font-bold text-pink-400">Primary, Secondary &amp; Early Latent (&lt;1 Year)</h3>
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Early Stage</span>
+                    </div>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-white block mb-1">First-Line Therapy:</strong>
+                            <strong>Benzathine Penicillin G 2.4 Million Units IM</strong> in a single dose.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-amber-400 block mb-1">Non-Pregnant Penicillin Allergy Alternative:</strong>
+                            Doxycycline 100 mg PO BID for 14 days OR Ceftriaxone 1g IV/IM daily for 10–14 days.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Late Latent, Tertiary, Unknown Duration -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h3 class="text-base font-bold text-purple-400">Late Latent, Tertiary, or Unknown Duration</h3>
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded">Late Stage</span>
+                    </div>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-white block mb-1">First-Line Therapy:</strong>
+                            <strong>Benzathine Penicillin G 2.4 Million Units IM weekly x 3 doses</strong> (Total 7.2 Million Units).
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-amber-400 block mb-1">Non-Pregnant Penicillin Allergy Alternative:</strong>
+                            Doxycycline 100 mg PO BID for 28 days.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Neurosyphilis / Ocular / Otic Syphilis -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                        <h3 class="text-base font-bold text-sky-400">Neurosyphilis / Ocular / Otic Syphilis</h3>
+                        <span class="text-[10px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded">CNS / Organ</span>
+                    </div>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-white block mb-1">First-Line Therapy:</strong>
+                            <strong>Aqueous Crystalline Penicillin G 18–24 Million Units IV daily</strong> (3–4 MU q4h or continuous infusion) for 10–14 days.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-slate-300 block mb-1">Alternative Option:</strong>
+                            Procaine Penicillin G 2.4 MU IM daily + Probenecid 500mg PO QID for 10-14 days.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Pregnancy Mandatory Rule & Jarisch-Herxheimer Warning -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card-3d glass-panel p-5 rounded-2xl border-l-4 border-l-pink-500 space-y-2">
+                    <h4 class="font-bold text-pink-400 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-person-pregnant text-base"></i> Syphilis in Pregnancy (CRITICAL MANDATE)
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        <strong>Penicillin G is the ONLY proven effective therapy for preventing maternal transmission to the fetus and treating fetal infection.</strong><br>
+                        <span class="text-pink-300 font-semibold">Mandatory Action:</span> Any pregnant woman with a penicillin allergy MUST be admitted for inpatient oral or IV <strong>Penicillin Desensitization</strong> followed immediately by Penicillin G administration. Doxycycline is strictly contraindicated.
+                    </p>
+                </div>
+
+                <div class="card-3d glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-2">
+                    <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-triangle-exclamation text-base"></i> Jarisch-Herxheimer Reaction Counseling
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Acute febrile reaction accompanied by headache, myalgia, tachycardia, and flushing occurring within 24 hours of initiating therapy (due to massive spirochete lysis).<br>
+                        <span class="text-amber-300 font-semibold">Management:</span> Symptomatic support with Antipyretics (Acetaminophen). Counsel pregnant patients that reaction may precipitate preterm labor or fetal distress; monitor accordingly.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 3: OTHER STDs / STIs GUIDELINES (CDC & WHO) -->
+        <section id="module-stis" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-rose-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-virus text-rose-400"></i>
+                        Sexually Transmitted Infections (STDs / STIs) Guidelines
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">First-line regimens for Gonorrhea, Chlamydia, Trichomoniasis, Mycoplasma, and Pelvic Inflammatory Disease.</p>
+                </div>
+                <span class="px-3 py-1 bg-rose-500/20 text-rose-300 text-xs font-semibold rounded-full border border-rose-500/30">CDC / WHO Standard</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-xs">
+
+                <!-- Gonorrhea -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="text-sm font-bold text-rose-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-microscope text-rose-400"></i> Neisseria gonorrhoeae
+                    </h3>
+                    <div class="space-y-2 text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-white block mb-1">Weight-Based First Line:</strong>
+                            &bull; Weight &lt; 150 kg: <strong>Ceftriaxone 500 mg IM single dose</strong>.<br>
+                            &bull; Weight &ge; 150 kg: <strong>Ceftriaxone 1 g IM single dose</strong>.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-rose-300 block mb-1">Chlamydial Co-infection Rule:</strong>
+                            If Chlamydia has not been excluded, add <strong>Doxycycline 100 mg PO BID x 7 days</strong>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chlamydia -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="text-sm font-bold text-sky-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-dna text-sky-400"></i> Chlamydia trachomatis
+                    </h3>
+                    <div class="space-y-2 text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-white block mb-1">Preferred First Line:</strong>
+                            <strong>Doxycycline 100 mg PO BID for 7 days</strong>.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-amber-300 block mb-1">Alternative / Pregnancy:</strong>
+                            <strong>Azithromycin 1 g PO single dose</strong> OR Amoxicillin 500 mg PO TID x 7 days.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trichomoniasis -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="text-sm font-bold text-purple-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-bugs text-purple-400"></i> Trichomonas vaginalis
+                    </h3>
+                    <div class="space-y-2 text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-white block mb-1">Females:</strong>
+                            <strong>Metronidazole 500 mg PO BID for 7 days</strong> (superior cure rate over single dose).
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-purple-300 block mb-1">Males:</strong>
+                            Metronidazole 2 g PO single dose.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mycoplasma genitalium -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="text-sm font-bold text-indigo-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-disease text-indigo-400"></i> Mycoplasma genitalium
+                    </h3>
+                    <div class="space-y-2 text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-white block mb-1">Two-Step Resistance-Guided Regimen:</strong>
+                            <strong>Step 1:</strong> Doxycycline 100 mg PO BID for 7 days.<br>
+                            <strong>Step 2:</strong> Follow immediately with Moxifloxacin 400 mg PO daily for 7 days.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pelvic Inflammatory Disease (PID) -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3 md:col-span-2 lg:col-span-2">
+                    <h3 class="text-sm font-bold text-amber-400 border-b border-slate-800 pb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-shield-cat text-amber-400"></i> Pelvic Inflammatory Disease (PID Outpatient Triple Therapy)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-amber-300 block mb-1">1. Ceftriaxone</strong>
+                            500 mg IM single dose
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-amber-300 block mb-1">2. Doxycycline</strong>
+                            100 mg PO BID x 14 days
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-amber-300 block mb-1">3. Metronidazole</strong>
+                            500 mg PO BID x 14 days
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 4: MAGNESIUM SULFATE (MgSO4) PROTOCOLS -->
+        <section id="module-mgso4" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-indigo-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-baby text-indigo-400"></i>
+                        Magnesium Sulfate (MgSO4) Clinical Protocol Engine
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">Severe Pre-eclampsia / Eclampsia management and Fetal Neuroprotection for preterm delivery.</p>
+                </div>
+                <span class="px-3 py-1 bg-indigo-500/20 text-indigo-300 text-xs font-semibold rounded-full border border-indigo-500/30">Obstetric Protocol</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <!-- 1. Pre-eclampsia / Eclampsia Protocol -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-kit-medical text-rose-400"></i> Severe Pre-eclampsia &amp; Eclampsia Regimens
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-indigo-400 block mb-1">Zuspan Regimen (IV Preferred):</strong>
+                            &bull; <strong>Loading Dose:</strong> 4g - 6g IV in 100 mL IV fluid over 15–20 minutes.<br>
+                            &bull; <strong>Maintenance:</strong> 1g - 2g / hour continuous IV infusion for 24 hours postpartum or post-last seizure.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-sky-400 block mb-1">Pritchard Regimen (IM Alternative):</strong>
+                            &bull; <strong>Loading Dose:</strong> 4g IV + 10g IM (5g in each buttock).<br>
+                            &bull; <strong>Maintenance:</strong> 5g IM into alternating buttocks every 4 hours.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Toxicity Safety Checks & Antidote -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Mandatory Safety Monitoring &amp; Antidote
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl space-y-1">
+                            <strong class="text-amber-400 block">Check Hourly Before Every Maintenance Dose:</strong>
+                            <p>&bull; <strong>Patellar Tendon Reflex:</strong> Must be PRESENT (lost at 9.6–12 mg/dL).</p>
+                            <p>&bull; <strong>Respiratory Rate:</strong> Must be <strong>&gt; 12–16 breaths/min</strong> (respiratory depression at &gt;12 mg/dL).</p>
+                            <p>&bull; <strong>Urine Output:</strong> Must be <strong>&gt; 30 mL/hour</strong> (renal excretion of Mg).</p>
+                        </div>
+                        <div class="p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300">
+                            <strong class="block text-red-400 mb-1"><i class="fa-solid fa-syringe mr-1"></i> Magnesium Toxicity Antidote:</strong>
+                            <strong>CALCIUM GLUCONATE 1 Gram IV Slow Push</strong> (10 mL of 10% solution administered IV over 3–5 minutes).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Fetal Neuroprotection Protocol -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4 lg:col-span-2">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-shield-heart text-emerald-400"></i> Fetal Neuroprotection Protocol (Preterm Delivery &lt; 32 Weeks)
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-emerald-400 block mb-1">Clinical Indication:</strong>
+                            Imminent preterm birth at <strong>&lt; 32 weeks gestation</strong> to reduce the risk of Cerebral Palsy and gross motor dysfunction.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-emerald-400 block mb-1">Dosing Regimen:</strong>
+                            &bull; <strong>Loading Dose:</strong> 4g IV over 20–30 minutes.<br>
+                            &bull; <strong>Maintenance:</strong> 1g / hour IV until delivery or for up to 24 hours.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-emerald-400 block mb-1">Retreatment Rule:</strong>
+                            If delivery does not occur within 24 hours and is again imminent later, a repeat 4g loading dose may be considered.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 5: GESTATIONAL DIABETES MELLITUS (GDM) GUIDELINES -->
+        <section id="module-gdm" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-emerald-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-cubes text-emerald-400"></i>
+                        Gestational Diabetes Mellitus (GDM) Guidelines (ACOG / WHO / ADA)
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">Diagnostic criteria, glycemic targets, and stepwise medical nutrition to pharmacotherapy.</p>
+                </div>
+                <span class="px-3 py-1 bg-emerald-500/20 text-emerald-300 text-xs font-semibold rounded-full border border-emerald-500/30">ACOG / WHO Standard</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+                <!-- Diagnostic Thresholds -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-vial-circle-check text-emerald-400"></i> Diagnostic Criteria
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-emerald-400 block mb-1">1-Step 75g OGTT (IADPSG / WHO):</strong>
+                            Diagnostic if <u>ANY ONE</u> value is met/exceeded:
+                            <p>&bull; Fasting: <strong>&ge; 92 mg/dL</strong> (5.1 mmol/L)</p>
+                            <p>&bull; 1-Hour: <strong>&ge; 180 mg/dL</strong> (10.0 mmol/L)</p>
+                            <p>&bull; 2-Hour: <strong>&ge; 153 mg/dL</strong> (8.5 mmol/L)</p>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800">
+                            <strong class="text-sky-400 block mb-1">2-Step Approach (ACOG):</strong>
+                            50g non-fasting screen (&ge;135-140 mg/dL) followed by 100g 3-hr OGTT (2 or more abnormal thresholds).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Target Glycemic Values -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-bullseye text-sky-400"></i> Pregnancy Glycemic Targets
+                    </h3>
+                    <div class="space-y-2 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span>Fasting Blood Glucose:</span>
+                            <strong class="text-sky-400 font-mono text-sm">&lt; 95 mg/dL</strong>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span>1-Hour Postprandial:</span>
+                            <strong class="text-sky-400 font-mono text-sm">&lt; 140 mg/dL</strong>
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl flex justify-between items-center">
+                            <span>2-Hour Postprandial:</span>
+                            <strong class="text-sky-400 font-mono text-sm">&lt; 120 mg/dL</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stepwise Management Flow -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white flex items-center gap-2 border-b border-slate-800 pb-3">
+                        <i class="fa-solid fa-turn-down text-purple-400"></i> Stepwise Management
+                    </h3>
+                    <div class="space-y-3 text-xs text-slate-300">
+                        <div class="p-3 bg-slate-900/80 rounded-xl border-l-2 border-l-emerald-500">
+                            <strong class="text-emerald-400 block mb-1">Step 1: Lifestyle &amp; MNT</strong>
+                            Medical Nutrition Therapy + postprandial walking for 1–2 weeks.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border-l-2 border-l-purple-500">
+                            <strong class="text-purple-400 block mb-1">Step 2: First-Line Pharmacotherapy</strong>
+                            <strong>INSULIN is the First-Line Standard of Care</strong> (NPH, Regular, Detemir, Aspart/Lispro) as it does not cross the placenta.
+                        </div>
+                        <div class="p-3 bg-slate-900/80 rounded-xl border-l-2 border-l-amber-500">
+                            <strong class="text-amber-400 block mb-1">Step 3: Oral Alternatives</strong>
+                            Metformin or Glyburide used only if patient refuses or cannot safely administer insulin (crosses placenta).
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- MODULE 6: H. PYLORI ERADICATION PROTOCOL -->
+        <section id="module-hpylori" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-sky-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-bacteria text-sky-400"></i>
+                        Helicobacter pylori Eradication Protocol (ACG &amp; Korean Revisions)
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">First-line regimens, penicillin allergy pathways, salvage options, and test-of-cure rules.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- 1. First-Line Options -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-800 pb-3">1. First-Line Regimens</h3>
+                    <ul class="space-y-3 text-xs text-slate-300">
+                        <li class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-sky-400 block mb-1">Optimized Bismuth Quadruple Therapy (Preferred)</strong>
+                            Empiric regimen when susceptibility unknown. Duration: 14 Days.
+                        </li>
+                        <li class="p-3 bg-slate-900/80 rounded-xl">
+                            <strong class="text-emerald-400 block mb-1">Vonoprazan + Amoxicillin Dual</strong>
+                            14-day dual therapy (Vonoprazan 20 mg BID + Amoxicillin 1g TID).
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 2. BQT Schedule -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-800 pb-3">2. BQT Dosing Schedule</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between"><span>PPI (e.g. Omeprazole 20mg)</span><strong class="text-indigo-300">BID</strong></div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between"><span>Bismuth Subsalicylate (300-524 mg)</span><strong class="text-indigo-300">QID</strong></div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between"><span>Tetracycline (500 mg)</span><strong class="text-indigo-300">QID</strong></div>
+                        <div class="p-2.5 bg-slate-900/80 rounded-xl flex justify-between"><span>Metronidazole (500 mg)</span><strong class="text-indigo-300">TID-QID</strong></div>
+                    </div>
+                </div>
+
+                <!-- 3. Test of Cure Calculator -->
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="text-base font-bold text-white border-b border-slate-800 pb-3">3. Test-of-Cure Date Calculator</h3>
+                    <div class="space-y-3 text-xs">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-semibold">Treatment End Date:</label>
+                            <input type="date" id="hpEndDate" class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-white">
+                        </div>
+                        <button id="btnCalcHpDate" class="w-full py-2 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-lg transition btn-tactile">Calculate Valid Test Window</button>
+                        <div id="hpResult" class="hidden p-3 bg-slate-900 rounded-lg border border-sky-500/40 text-slate-200"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 7: IRON PROFILE INTERPRETER -->
+        <section id="module-iron" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-red-500 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-vial text-red-400"></i>
+                        Iron Profile Interpretation &amp; TSAT Calculator
+                    </h2>
+                    <p class="text-sm text-slate-300 mt-1">Stepwise diagnostic engine for Iron Deficiency, Chronic Disease Anemia, and Iron Overload.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                    <h3 class="text-base font-bold text-white border-b border-slate-800 pb-3">Lab Inputs</h3>
+                    <form onsubmit="event.preventDefault();" class="space-y-3 text-xs">
+                        <div><label class="block text-slate-300 mb-1">Serum Ferritin (ng/mL)</label><input type="number" id="ferritin" placeholder="15" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white"></div>
+                        <div><label class="block text-slate-300 mb-1">Serum Iron (&mu;g/dL)</label><input type="number" id="serumIron" placeholder="35" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white"></div>
+                        <div><label class="block text-slate-300 mb-1">TIBC (&mu;g/dL)</label><input type="number" id="tibc" placeholder="410" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white"></div>
+                        <div class="flex items-center space-x-2"><input type="checkbox" id="hasInflammation" class="rounded bg-slate-900 border-slate-700 text-red-600"><label for="hasInflammation" class="text-slate-300">Active Inflammation / High CRP</label></div>
+                        <button id="btnInterpretIron" type="button" class="w-full py-2.5 bg-gradient-to-r from-red-600 to-sky-600 text-white font-semibold rounded-lg btn-tactile">Interpret Profile</button>
+                    </form>
+                </div>
+
+                <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 lg:col-span-2 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-4">
+                            <h3 class="text-base font-bold text-white">Diagnostic Output</h3>
+                            <span id="tsatBadge" class="text-xs px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 font-mono">TSAT: -- %</span>
+                        </div>
+                        <div id="ironOutput" class="p-6 bg-slate-900/80 rounded-xl border border-slate-800 text-center text-slate-400">Enter lab values on the left to evaluate profile.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 8: HYPERTENSIVE EMERGENCY -->
+        <section id="module-hypertension" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-amber-500 flex justify-between items-center shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-heart-crack text-amber-400"></i> Hypertensive Emergency Triage</h2>
+                    <p class="text-sm text-slate-300 mt-1">Target organ damage scenario BP lowering targets.</p>
+                </div>
+            </div>
+
+            <div class="card-3d glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+                <h3 class="text-base font-bold text-white border-b border-slate-800 pb-3">Emergency BP Scenario Target Generator</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                    <div class="space-y-3">
+                        <div><label class="block text-slate-300 mb-1">Systolic BP (mmHg)</label><input type="number" id="htnSbp" placeholder="210" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white"></div>
+                        <div><label class="block text-slate-300 mb-1">Diastolic BP (mmHg)</label><input type="number" id="htnDbp" placeholder="120" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white"></div>
+                        <div>
+                            <label class="block text-slate-300 mb-1">Clinical Scenario</label>
+                            <select id="htnScenario" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-white">
+                                <option value="pres">PRES</option>
+                                <option value="ischemic_lytic">Ischemic Stroke (Thrombolysis Candidate)</option>
+                                <option value="ischemic_nolyptic">Ischemic Stroke (Non-Lytic Candidate)</option>
+                                <option value="ich">Intracerebral Hemorrhage</option>
+                                <option value="acs">ACS / Acute Pulmonary Edema</option>
+                                <option value="dissection">Aortic Dissection</option>
+                                <option value="renal">AKI / Malignant HTN</option>
+                                <option value="preeclampsia">Pre-eclampsia</option>
+                            </select>
+                        </div>
+                        <button id="btnCalcHtn" type="button" class="w-full py-2.5 bg-amber-600 text-white font-semibold rounded-lg btn-tactile">Generate Target Protocol</button>
+                    </div>
+
+                    <div id="htnTargetResult" class="md:col-span-2 p-5 bg-slate-900/90 rounded-xl border border-slate-800 flex items-center justify-center text-slate-400">
+                        Enter BP and select scenario to generate timeline targets.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 9: GENERAL DISEASE LIBRARY -->
+        <section id="module-disease-ref" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-teal-500 flex justify-between items-center shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-book-medical text-teal-400"></i> General Disease Library</h2>
+                    <p class="text-sm text-slate-300 mt-1">T2D (ADA), Asthma (GINA), COPD (GOLD), CAP (ATS), Sepsis SSC Bundle.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs">
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <strong class="text-blue-400 text-sm block">Type 2 Diabetes (ADA / WHO)</strong>
+                    <p class="text-slate-300">HbA1c Target &lt;7.0%. Use SGLT2i for HF/CKD or GLP-1 RA for ASCVD/weight independent of baseline HbA1c.</p>
+                </div>
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <strong class="text-teal-400 text-sm block">Asthma &amp; COPD (GINA / GOLD)</strong>
+                    <p class="text-slate-300">GINA: As-needed ICS-Formoterol preferred reliever. COPD: Target SpO2 88-92% during exacerbation.</p>
+                </div>
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <strong class="text-emerald-400 text-sm block">CAP Outpatient vs Inpatient</strong>
+                    <p class="text-slate-300">Outpatient: Amoxicillin 1g TID. Inpatient: Ceftriaxone 1-2g IV + Azithromycin 500mg PO daily.</p>
+                </div>
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-2">
+                    <strong class="text-rose-400 text-sm block">Sepsis SSC 1-Hour Bundle</strong>
+                    <p class="text-slate-300">Measure lactate, obtain blood cultures, give broad antibiotics, and 30 mL/kg crystalloids if hypotensive or lactate &ge;4 mmol/L.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- MODULE 10: RISK CALCULATORS -->
+        <section id="module-calculators" class="tab-content hidden space-y-6">
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-purple-500 flex justify-between items-center shadow-xl">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fa-solid fa-calculator text-purple-400"></i> Dynamic Risk Calculators</h2>
+                    <p class="text-sm text-slate-300 mt-1">CURB-65, qSOFA, and Cockcroft-Gault Creatinine Clearance.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 text-xs">
+                <!-- CURB-65 -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="font-bold text-white text-sm">CURB-65 Pneumonia Score</h3>
+                    <div class="space-y-1.5">
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="c65C" class="calc-trigger-curb rounded"><span>Confusion (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="c65U" class="calc-trigger-curb rounded"><span>Urea &gt; 7 mmol/L (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="c65R" class="calc-trigger-curb rounded"><span>Respiratory Rate &ge; 30 (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="c65B" class="calc-trigger-curb rounded"><span>BP (SBP &lt;90 or DBP &le;60) (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="c65A" class="calc-trigger-curb rounded"><span>Age &ge; 65 (+1)</span></label>
+                    </div>
+                    <div id="curbResult" class="p-3 bg-slate-900 rounded-xl text-slate-300">Score: <strong class="text-white">0</strong> &bull; Low Risk</div>
+                </div>
+
+                <!-- qSOFA -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="font-bold text-white text-sm">qSOFA Sepsis Risk Score</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="qsofaRr" class="calc-trigger-qsofa rounded"><span>RR &ge; 22 /min (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="qsofaGcs" class="calc-trigger-qsofa rounded"><span>Altered Mental Status (+1)</span></label>
+                        <label class="flex items-center space-x-2"><input type="checkbox" id="qsofaSbp" class="calc-trigger-qsofa rounded"><span>SBP &le; 100 mmHg (+1)</span></label>
+                    </div>
+                    <div id="qsofaResult" class="p-3 bg-slate-900 rounded-xl text-slate-300">qSOFA Score: <strong class="text-white">0</strong> / 3 &bull; Low Risk</div>
+                </div>
+
+                <!-- CrCl Cockcroft-Gault -->
+                <div class="card-3d glass-panel p-5 rounded-2xl border border-slate-800 space-y-3">
+                    <h3 class="font-bold text-white text-sm">Cockcroft-Gault CrCl</h3>
+                    <div class="space-y-2">
+                        <input type="number" id="crclAge" placeholder="Age (yrs)" class="calc-trigger-crcl w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
+                        <input type="number" id="crclWeight" placeholder="Weight (kg)" class="calc-trigger-crcl w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
+                        <input type="number" step="0.1" id="crclScr" placeholder="Serum Cr (mg/dL)" class="calc-trigger-crcl w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
+                        <select id="crclSex" class="calc-trigger-crcl w-full bg-slate-900 border border-slate-700 rounded p-2 text-white">
+                            <option value="male">Male</option>
+                            <option value="female">Female (&times; 0.85)</option>
+                        </select>
+                    </div>
+                    <div id="crclResult" class="p-3 bg-slate-900 rounded-xl text-slate-300">CrCl: <strong class="text-white">-- mL/min</strong></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Global Footer -->
+    <footer class="mt-12 border-t border-slate-800/80 py-6 text-center text-xs text-slate-400 glass-panel">
+        <p class="font-semibold text-slate-300">3D Clinical Decision Support System &bull; Practice Guidelines Hub</p>
+        <p class="mt-1 text-[11px] text-slate-400">WHO, CDC, ACG, ADA, GINA, GOLD, &amp; ISH Practice Protocols.</p>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- 1. TAB SWITCHING LOGIC ---
+            const tabButtons = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            function switchTab(targetTabId) {
+                tabContents.forEach(content => {
+                    content.classList.add('hidden');
+                    content.classList.remove('block');
+                });
+                tabButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                });
+
+                const targetSection = document.getElementById('module-' + targetTabId);
+                const activeButton = document.querySelector(`.nav-tab[data-tab="${targetTabId}"]`);
+
+                if (targetSection) {
+                    targetSection.classList.remove('hidden');
+                    targetSection.classList.add('block');
+                }
+                if (activeButton) {
+                    activeButton.classList.add('active');
+                }
+            }
+
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+
+            // --- 2. DARK / LIGHT THEME TOGGLE ---
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeToggleMobile = document.getElementById('themeToggleMobile');
+            const themeIcon = document.getElementById('themeIcon');
+
+            function toggleTheme() {
+                const html = document.documentElement;
+                if (html.classList.contains('dark')) {
+                    html.classList.remove('dark');
+                    html.classList.add('light');
+                    if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+                } else {
+                    html.classList.remove('light');
+                    html.classList.add('dark');
+                    if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+                }
+            }
+
+            if (themeToggleBtn) themeToggleBtn.addEventListener('click', toggleTheme);
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
+
+            // --- 3. H. PYLORI TEST-OF-CURE CALCULATOR ---
+            const btnCalcHpDate = document.getElementById('btnCalcHpDate');
+            if (btnCalcHpDate) {
+                btnCalcHpDate.addEventListener('click', function() {
+                    const dateVal = document.getElementById('hpEndDate').value;
+                    const resDiv = document.getElementById('hpResult');
+
+                    if (!dateVal) {
+                        resDiv.classList.remove('hidden');
+                        resDiv.innerHTML = '<span class="text-red-400 font-semibold">Please select a valid medication end date.</span>';
+                        return;
+                    }
+
+                    const endDate = new Date(dateVal);
+                    const ppiDate = new Date(endDate); ppiDate.setDate(ppiDate.getDate() + 14);
+                    const testDate = new Date(endDate); testDate.setDate(testDate.getDate() + 28);
+
+                    resDiv.classList.remove('hidden');
+                    resDiv.innerHTML = `
+                        <div class="space-y-1.5 text-xs">
+                            <p><strong class="text-sky-400">PPI Washout End:</strong> <span class="font-mono text-white">${ppiDate.toDateString()}</span> (14 Days)</p>
+                            <p><strong class="text-emerald-400">Earliest Test Window:</strong> <span class="font-mono text-white">${testDate.toDateString()}</span> (4 Weeks)</p>
+                        </div>
+                    `;
+                });
+            }
+
+            // --- 4. IRON PROFILE & TSAT INTERPRETER ---
+            function interpretIronProfile() {
+                const ferritin = parseFloat(document.getElementById('ferritin').value);
+                const iron = parseFloat(document.getElementById('serumIron').value);
+                const tibc = parseFloat(document.getElementById('tibc').value);
+                const inflammation = document.getElementById('hasInflammation').checked;
+                const outputDiv = document.getElementById('ironOutput');
+                const badge = document.getElementById('tsatBadge');
+
+                if (isNaN(ferritin) || isNaN(iron) || isNaN(tibc) || tibc <= 0) {
+                    badge.innerText = `TSAT: -- %`;
+                    outputDiv.innerHTML = `<span class="text-slate-400">Enter Ferritin, Serum Iron, and TIBC to calculate diagnosis.</span>`;
+                    return;
+                }
+
+                const tsat = ((iron / tibc) * 100).toFixed(1);
+                badge.innerText = `TSAT: ${tsat}%`;
+
+                let diagnosis = "", details = "", colorClass = "";
+
+                if (tsat > 45 || ferritin > 300) {
+                    diagnosis = "Iron Overload / Hemochromatosis";
+                    colorClass = "text-purple-400";
+                    details = "High TSAT (>45%) and high Ferritin indicate potential iron overload.";
+                } else if (ferritin < 30 || (tsat < 20 && tibc > 360)) {
+                    diagnosis = "Classic Iron Deficiency Anemia";
+                    colorClass = "text-red-400";
+                    details = "Low Ferritin (<30 ng/mL), high TIBC (>360), and low TSAT (<20%) confirm depleted iron stores.";
+                } else if ((ferritin >= 30 && inflammation) || (tsat < 20 && tibc <= 320)) {
+                    diagnosis = "Anemia of Chronic Inflammation";
+                    colorClass = "text-amber-400";
+                    details = "Normal or elevated Ferritin with low TSAT (<20%) due to inflammatory iron trapping.";
+                } else {
+                    diagnosis = "Equivocal / Mixed Pattern";
+                    colorClass = "text-sky-400";
+                    details = "Overlapping lab features. Evaluate clinical history.";
+                }
+
+                outputDiv.innerHTML = `
+                    <div class="space-y-2">
+                        <span class="text-[10px] uppercase text-slate-400 font-semibold">Diagnostic Assessment</span>
+                        <h4 class="text-lg font-bold ${colorClass}">${diagnosis}</h4>
+                        <p class="text-xs text-slate-300">${details}</p>
+                        <div class="mt-2 pt-2 border-t border-slate-800 text-xs text-slate-300">
+                            Calculated TSAT: <strong class="text-white font-mono">${tsat}%</strong>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const btnInterpretIron = document.getElementById('btnInterpretIron');
+            if (btnInterpretIron) btnInterpretIron.addEventListener('click', interpretIronProfile);
+
+            // --- 5. HYPERTENSIVE EMERGENCY TARGET TRIAGE ---
+            function calculateHtnTarget() {
+                const sbp = parseFloat(document.getElementById('htnSbp').value);
+                const dbp = parseFloat(document.getElementById('htnDbp').value);
+                const scenario = document.getElementById('htnScenario').value;
+                const container = document.getElementById('htnTargetResult');
+
+                if (isNaN(sbp) || isNaN(dbp)) {
+                    container.innerHTML = '<span class="text-red-400">Please enter Systolic and Diastolic BP.</span>';
+                    return;
+                }
+
+                let targetText = "", timeFrame = "", notes = "";
+                switch (scenario) {
+                    case 'pres':
+                        targetText = `Target SBP: ~${Math.round(sbp * 0.75)} mmHg (25% reduction)`;
+                        timeFrame = "Within 1 Hour";
+                        notes = "Gradual reduction to prevent brain hypoperfusion.";
+                        break;
+                    case 'ischemic_lytic':
+                        targetText = "Target BP < 180/105 mmHg";
+                        timeFrame = "Before Lytics & 24h Post";
+                        notes = "Strict control required prior to thrombolysis.";
+                        break;
+                    case 'ischemic_nolyptic':
+                        targetText = "Maintain BP < 220/120 mmHg";
+                        timeFrame = "First 48 Hours";
+                        notes = "Permissive hypertension allowed to maintain penumbra perfusion.";
+                        break;
+                    case 'ich':
+                        targetText = "Target SBP 130 - 140 mmHg";
+                        timeFrame = "Within 6 Hours";
+                        notes = "Prevents hematoma expansion.";
+                        break;
+                    case 'acs':
+                        targetText = "Target SBP < 140 mmHg";
+                        timeFrame = "Immediate";
+                        notes = "IV Nitroglycerin or Labetalol.";
+                        break;
+                    case 'dissection':
+                        targetText = "Target SBP < 120 mmHg & HR 60-80 bpm";
+                        timeFrame = "Within 20 Minutes";
+                        notes = "Rapid lowering using IV Beta-blockers.";
+                        break;
+                    case 'renal':
+                        targetText = "Reduce MAP by 25%";
+                        timeFrame = "Over 24 Hours";
+                        notes = "Preserve renal blood flow.";
+                        break;
+                    case 'preeclampsia':
+                        targetText = "Target SBP < 160 mmHg & DBP < 110 mmHg";
+                        timeFrame = "Over several hours";
+                        notes = "IV Labetalol, Hydralazine, or Nifedipine.";
+                        break;
+                }
+
+                container.innerHTML = `
+                    <div class="space-y-2 text-xs w-full">
+                        <span class="text-[10px] uppercase text-amber-400 font-bold">Recommended Scenario Protocol</span>
+                        <h4 class="text-base font-bold text-white">${targetText}</h4>
+                        <p><strong class="text-slate-300">Timeline:</strong> <span class="text-amber-300 font-semibold">${timeFrame}</span></p>
+                        <p class="text-slate-300"><i class="fa-solid fa-circle-info text-sky-400 mr-1"></i> ${notes}</p>
+                    </div>
+                `;
+            }
+
+            const btnCalcHtn = document.getElementById('btnCalcHtn');
+            if (btnCalcHtn) btnCalcHtn.addEventListener('click', calculateHtnTarget);
+
+            // --- 6. CALCULATORS LOGIC (CURB-65, qSOFA, CrCl) ---
+            function calcCurb65() {
+                let score = 0;
+                if (document.getElementById('c65C').checked) score++;
+                if (document.getElementById('c65U').checked) score++;
+                if (document.getElementById('c65R').checked) score++;
+                if (document.getElementById('c65B').checked) score++;
+                if (document.getElementById('c65A').checked) score++;
+
+                const res = document.getElementById('curbResult');
+                let rec = score <= 1 
+                    ? "<span class='text-emerald-400 font-bold'>Low Risk &bull; Outpatient</span>" 
+                    : score === 2 
+                    ? "<span class='text-amber-400 font-bold'>Moderate Risk &bull; Inpatient</span>" 
+                    : "<span class='text-rose-400 font-bold'>High Risk &bull; Severe CAP (Consider ICU)</span>";
+
+                res.innerHTML = `Score: <strong class="text-white text-sm">${score}</strong> &bull; ${rec}`;
+            }
+            document.querySelectorAll('.calc-trigger-curb').forEach(el => el.addEventListener('change', calcCurb65));
+
+            function calcQsofa() {
+                let score = 0;
+                if (document.getElementById('qsofaRr').checked) score++;
+                if (document.getElementById('qsofaGcs').checked) score++;
+                if (document.getElementById('qsofaSbp').checked) score++;
+
+                const res = document.getElementById('qsofaResult');
+                let status = score >= 2 
+                    ? '<span class="text-rose-400 font-bold">HIGH RISK (&ge;2) &bull; High risk of poor outcome</span>' 
+                    : '<span class="text-slate-300">Low risk (&lt;2)</span>';
+
+                res.innerHTML = `qSOFA Score: <strong class="text-white text-sm">${score}</strong> / 3 &bull; ${status}`;
+            }
+            document.querySelectorAll('.calc-trigger-qsofa').forEach(el => el.addEventListener('change', calcQsofa));
+
+            function calcCrCl() {
+                const age = parseFloat(document.getElementById('crclAge').value);
+                const weight = parseFloat(document.getElementById('crclWeight').value);
+                const scr = parseFloat(document.getElementById('crclScr').value);
+                const sex = document.getElementById('crclSex').value;
+                const res = document.getElementById('crclResult');
+
+                if (isNaN(age) || isNaN(weight) || isNaN(scr) || scr <= 0) {
+                    res.innerHTML = `CrCl: <strong class="text-white">-- mL/min</strong>`;
+                    return;
+                }
+
+                let crcl = ((140 - age) * weight) / (72 * scr);
+                if (sex === 'female') crcl *= 0.85;
+
+                res.innerHTML = `Estimated CrCl: <strong class="text-sky-400 font-mono text-sm">${crcl.toFixed(1)} mL/min</strong>`;
+            }
+            document.querySelectorAll('.calc-trigger-crcl').forEach(el => {
+                el.addEventListener('input', calcCrCl);
+                el.addEventListener('change', calcCrCl);
+            });
+
+            // --- 7. GLOBAL SEARCH FILTER ---
+            const globalSearch = document.getElementById('globalSearch');
+            if (globalSearch) {
+                globalSearch.addEventListener('input', function(e) {
+                    const query = e.target.value.toLowerCase().trim();
+                    const cards = document.querySelectorAll('.card-3d');
+
+                    cards.forEach(card => {
+                        const content = card.innerText.toLowerCase();
+                        card.style.display = (query === '' || content.includes(query)) ? "" : "none";
+                    });
+                });
+            }
+
+        });
+    </script>
+</body>
+</html>
+```
